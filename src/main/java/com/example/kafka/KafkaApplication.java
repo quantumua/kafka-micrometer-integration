@@ -21,9 +21,8 @@ import java.util.concurrent.TimeUnit;
 
 @SpringBootApplication
 @Slf4j
-public class KafkaApplication/* implements CommandLineRunner */{
+public class KafkaApplication/* implements CommandLineRunner */ {
 
-    private static final String TOPIC = "test";
 
     public static void main(String[] args) {
         SpringApplication.run(KafkaApplication.class, args)/*.close()*/;
@@ -74,7 +73,6 @@ public class KafkaApplication/* implements CommandLineRunner */{
         log.info(cr.toString());
         latch.countDown();
     }*/
-
 
 
 }
