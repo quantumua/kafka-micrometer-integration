@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -23,13 +22,12 @@ public class KafkaMessageSender implements MessageSender {
 
     @Override
     @Timed(value = "message-sent-timers", description = "Time spent sending message, annotated timer", extraTags = {"type", "annotated"})
-    public Mono<Void> send() {
+    public void send() {
         messageSendTimer.record(() -> kafkaTemplate.send(TOPIC, "hello message #" + counter.getAndIncrement()));
-        return Mono.empty();
     }
 
     @Autowired
-    private void initTimer( MeterRegistry meterRegistry) {
+    private void initTimer(MeterRegistry meterRegistry) {
         messageSendTimer = Timer.builder("message-sent-timers").tag("type", "custom").description("Time spent sending message, custom timer").register(meterRegistry);
     }
 }
